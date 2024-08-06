@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->enum('title', ['depósito', 'saque', 'transferência']);
+            $table->enum('title', ['deposit', 'withdraw', 'transfer']);
             $table->double('value');
             $table->timestamps();
 

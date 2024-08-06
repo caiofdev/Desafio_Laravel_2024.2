@@ -25,10 +25,6 @@ return new class extends Migration
 
             // Foreing Keys
 
-            /**
-             * Another method for foreign key
-             */
-
             $table->foreignId('admin_id')->constrained('admins');
         });
     }
