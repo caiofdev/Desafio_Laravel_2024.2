@@ -26,6 +26,7 @@ return new class extends Migration
             // Foreing Keys
 
             $table->foreignId('admin_id')->constrained('admins');
+            $table->foreignId('address_id')->constrained('addresses');
         });
     }
 
