@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cpf' ,
+        'birth_date' ,
+        'phone' ,
+        'photo',
+        'manager_id',
+        'account_id',
+        'address_id', 
     ];
 
     /**
@@ -43,5 +51,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    
+    public function account(){
+        return $this->belongsTo(Account::class);
+    }
+
+    public function address(){
+        return $this->belongsTo(Address::class);
+    }
+
+    public function manager(){
+        return $this->belongsTo(Manager::class);
     }
 }
