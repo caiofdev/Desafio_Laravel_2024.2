@@ -3,9 +3,29 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Global
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+// Admin routes
+
+Route::middleware('admin')->group(function () {
+    Route::get('/adminDashboard', function () {
+        echo "You're an admin!";
+    })->name('admin.dashboard');
+});
+
+// Manager routes
+
+Route::middleware('manager')->group(function () {
+    Route::get('/managerDashboard', function () {
+        echo "You're a manager!";
+    })->name('manager.dashboard');
+});
+
+// User routes
 
 Route::get('/dashboard', function () {
     return view('dashboard');
