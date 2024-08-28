@@ -14,8 +14,14 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create()
     {
+        if(Auth::guard('manager')->check()){
+            return redirect()->route('manager.dashboard');
+        } else if(Auth::guard('admin')->check()){
+            return redirect()->route('admin.dashboard');
+        } 
+
         return view('auth.login');
     }
 
@@ -34,13 +40,13 @@ class AuthenticatedSessionController extends Controller
 
         if(Auth::attempt($credentials)){
             return redirect()->route('dashboard');
-        } 
-        else if(Auth::guard('manager')->attempt($credentials)){
+        } else if(Auth::guard('manager')->attempt($credentials)){
             return redirect()->route('manager.dashboard');
-        }
-        else if(Auth::guard('admin')->attempt($credentials)){
+        } else if(Auth::guard('admin')->attempt($credentials)){
             return redirect()->route('admin.dashboard');
         }
+
+        return redirect('/');
     }
 
     /**
@@ -48,7 +54,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        if(Auth::guard('web')->check()){
+            Auth::guard('web')->logout();
+        } else if(Auth::guard('admin')->check()){
+            Auth::guard('admin')->logout();
+        } else if(Auth::guard('manager')->check()){
+            Auth::guard('manager')->logout();
+        }else{
+            return redirect('/');
+        }
 
         $request->session()->invalidate();
 

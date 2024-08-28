@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 Route::middleware('admin')->group(function () {
     Route::get('/adminDashboard', function () {
-        echo "You're an admin!";
+        return view('admin.dashboard');
     })->name('admin.dashboard');
 });
 
@@ -21,7 +21,7 @@ Route::middleware('admin')->group(function () {
 
 Route::middleware('manager')->group(function () {
     Route::get('/managerDashboard', function () {
-        echo "You're a manager!";
+        return view('manager.dashboard');
     })->name('manager.dashboard');
 });
 
