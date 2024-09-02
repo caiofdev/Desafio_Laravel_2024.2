@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-white font-semibold text-xl text-gray-800 leading-tight fade-up">
-            {{ __('Welcome') }}
+            {{ __('Transaction') }}
         </h2>
     </x-slot>
 
