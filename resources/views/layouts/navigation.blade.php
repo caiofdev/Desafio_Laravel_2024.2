@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-slate-900 border-b border-blue-500">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,15 +6,55 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <img src="{{asset('images/app-logo.png')}}" class="block w-10 fade-up"/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex fade-up">
+                    @if(Auth::guard('web')->check()) <!-- Users -->
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('loan')" :active="request()->routeIs('loan')">
+                            {{ __('Loan') }}    
+                        </x-nav-link>
+                        
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('transaction')" :active="request()->routeIs('transaction')">
+                            {{ __('Transactions') }}
+                        </x-nav-link>
+
+                    @elseif(Auth::guard('manager')->check()) <!-- Manager -->
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manager.dashboard')" :active="request()->routeIs('manager.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manager.loan')" :active="request()->routeIs('manager.loan')">
+                            {{ __('Loan') }}
+                        </x-nav-link>
+
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manager.transaction')" :active="request()->routeIs('manager.transaction')">
+                            {{ __('Transactions') }}
+                        </x-nav-link>
+
+                        @elseif(Auth::guard('admin')->check())
+                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+
+                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.admin')" :active="request()->routeIs('admin.admin')">
+                                {{ __('Administrators') }}
+                            </x-nav-link>
+
+                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.manager')" :active="request()->routeIs('admin.manager')">
+                                {{ __('Managers') }}
+                            </x-nav-link>
+
+                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.user')" :active="request()->routeIs('admin.user')">
+                                {{ __('Users') }}
+                            </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -22,7 +62,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="fade-up inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-slate-900 hover:text-blue-500 focus:outline-none transition ease-in-out duration-150">
                             <div>
                                 @if(Auth::guard('manager')->check())
                                     {{Auth::guard('manager')->user()->name}}
@@ -41,24 +81,39 @@
                         </button>
                     </x-slot>
 
+                    @if(Auth::guard('web')->check())
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Account') }}
+                            </x-dropdown-link>
+                    @elseif(Auth::guard('manager')->check())
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Account') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('manager.user')">
+                                {{ __('Manage Users') }}
+                            </x-dropdown-link>
+                    @else
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Account') }}
                         </x-dropdown-link>
+                    @endif
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
