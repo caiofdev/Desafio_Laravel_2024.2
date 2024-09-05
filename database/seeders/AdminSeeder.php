@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Admin;
 use App\Models\Address;
 use App\Models\Account;
+use Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -29,6 +30,19 @@ class AdminSeeder extends Seeder
             'street' => 'fake()->streetName()',
             'building_number' => 'fake()->buildingNumber()',
             'postcode' => 'fake()->postcode()',  
+        ]);
+
+        Admin::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'cpf' => fake()->unique()->numerify('###.###.###-##'),
+            'birth_date' => fake()->dateTimeBetween('-60 years', '-28 years'),
+            'phone' => fake()->unique()->phoneNumber(),
+            'photo' => fake()->imageUrl(),
+            'admin_id' => 1,
+            'address_id' => 1,
         ]);
 
         Admin::factory(10)->create()->each(function ($admin){
