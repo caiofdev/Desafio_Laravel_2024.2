@@ -50,10 +50,6 @@
                             <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.manager')" :active="request()->routeIs('admin.manager')">
                                 {{ __('Managers') }}
                             </x-nav-link>
-
-                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.user')" :active="request()->routeIs('admin.user')">
-                                {{ __('Users') }}
-                            </x-nav-link>
                     @endif
                 </div>
             </div>
