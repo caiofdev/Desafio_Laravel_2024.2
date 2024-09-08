@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PendencyController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SendController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ManagerController;
@@ -23,11 +25,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
-    // Mail routes
-
-    Route::get('/admin/sendEmail', [SendController::class, 'index'])->name('send.index');
-    Route::post('/admin/sendEmail', [SendController::class, 'store'])->name('send.store');
 
     // Manage routes
 
@@ -52,19 +49,17 @@ Route::middleware('admin')->group(function () {
 
 Route::middleware('manager')->group(function () {
 
-    Route::get('/manager/dashboard', function () {
-        return view('manager.dashboard');
-    })->name('manager.dashboard');
+    Route::get('/manager/dashboard', [ManagerController::class, 'dashboard'])->name('manager.dashboard');
 
     // Operations
 
     Route::get('/manager/transaction', [AccountController::class, 'transactionsViewManager'])->name('manager.transaction');
     Route::post('/manager/transaction', [AccountController::class, 'depositAndWithdraw'])->name('manager.deposit');
-    
-
-    Route::get('/manager/loan', function () {
-        return view('manager.loan');
-    })->name('manager.loan');
+    Route::get('/manager/transaction/transfer', [AccountController::class, 'transferViewManager'])->name('manager.view-transfer');
+    Route::post('/manager/transaction/transfer', [AccountController::class, 'transfer'])->name('manager.transfer');
+    Route::get('/manager/pendencies', [PendencyController::class, 'index'])->name('manage.pendencies');
+    Route::get('/manager/loan', [LoanController::class, 'loanViewManager'])->name('manager.view-loan');
+    Route::get('/manager/transaction/extract', [AccountController::class, 'generatePdfManager'])->name('manager.pdf');
 
     // Manage routes
 
@@ -83,21 +78,22 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
     // Operations
 
     Route::get('/transaction', [AccountController::class, 'transactionsViewUser'])->name('user.transaction');
     Route::post('/transaction', [AccountController::class, 'depositAndWithdraw'])->name('user.deposit');
+    Route::get('/transaction/transfer', [AccountController::class, 'transferViewUser'])->name('user.view-transfer');
+    Route::post('/transaction/transfer', [AccountController::class, 'transfer'])->name('user.transfer');
+    Route::get('/transaction/extract', [AccountController::class, 'generatePdfUser'])->name('user.pdf');
 
     Route::get('/loan', function () {
         return view('loan');
     })->name('loan');
 
     // Manage routes
-    
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

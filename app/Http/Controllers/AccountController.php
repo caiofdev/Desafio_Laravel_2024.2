@@ -7,6 +7,7 @@ use App\Models\Account;
 use App\Models\Transaction;
 use App\Models\Pendency;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AccountController extends Controller
 {
@@ -110,5 +111,25 @@ class AccountController extends Controller
         $receiverAccount->save();
 
         return redirect()->back()->with('Sucess', 'Transferência realizada');
+    }
+
+    public function generatePdfManager(){
+        
+        $user = Auth::guard('manager')->user();
+
+        $transaction = Transaction::where('sender_id', $user->id)->latest()->take(10)->get();
+
+        $pdf = Pdf::loadView('pdf', ['transactions' => $transaction], compact('user'));
+        return $pdf->stream();
+    }
+
+    public function generatePdfUser(){
+        
+        $user = Auth::guard('web')->user();
+
+        $transaction = Transaction::where('sender_id', $user->id)->latest()->take(10)->get();
+
+        $pdf = Pdf::loadView('pdf', ['transactions' => $transaction], compact('user'));
+        return $pdf->stream();
     }
 }

@@ -73,53 +73,50 @@
                             </div>
                         </div>
 
+                        <!-- Transfer Form -->
+                        <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                                <h4 class="text-xl font-semibold mb-2">Transfer</h4>
+                                    <div class="mb-4">
+                                        @if(Auth::guard('manager')->check())
+                                            <a href="{{route('manager.view-transfer')}}">
+                                        @elseif(Auth::guard('web')->check())
+                                            <a href="{{route('user.view-transfer')}}">
+                                        @endif
+                                            <button" type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+                                                Transfer
+                                            </button>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+
                         <!-- Recent Transactions Section -->
-                        <div class="bg-gray-800 p-4 rounded-lg shadow-lg mb-6">
+                        <div class="mt-7 bg-gray-800 p-4 rounded-lg shadow-lg mb-6">
                             <h4 class="text-xl font-semibold mb-2">Recent Transactions</h4>
                             <ul class="list-disc list-inside mb-4">
-                                <!-- Example transactions -->
-                                <li>Deposit: $500 - 01/09/2024</li>
-                                <li>Withdrawal: $200 - 30/08/2024</li>
-                                <li>Transfer: $150 - 28/08/2024</li>
+                                @foreach($latestTransaction as $transaction)
+                                    <li>
+                                        <strong> 
+                                            {{ $transaction->title }} - $ {{ $transaction->value }} at {{ $transaction->created_at->format('d/m/Y H:i') }} 
+                                        </strong>
+                                    </li>
+                                @endforeach
                                 <!-- Add more transaction examples as needed -->
                             </ul>
-                            <button onclick="generatePDF()" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                                Generate PDF
-                            </button>
+                            @if(Auth::guard('web')->check())
+                            <a href="{{route('user.pdf')}}">
+                            @elseif(Auth::guard('manager')->check())
+                            <a href="{{route('manager.pdf')}}">
+                            @endif
+                                <button class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Generate PDF
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Modal -->
-        <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-1/3">
-                <h3 class="text-lg font-semibold text-white mb-4">Generating PDF</h3>
-                <p class="text-white">Your PDF is being generated. Please wait...</p>
-                <button onclick="closeModal()" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">
-                    Close
-                </button>
-            </div>
-        </div>
-
-        <script>
-            function generatePDF() {
-                // Open the modal
-                document.getElementById('pdfModal').classList.remove('hidden');
-
-                // Simulate PDF generation process
-                setTimeout(function() {
-                    // Close the modal after some time (simulate the process)
-                    document.getElementById('pdfModal').classList.add('hidden');
-                    alert('PDF generated successfully!');
-                }, 2000); // Simulate a 2-second process
-            }
-
-            function closeModal() {
-                document.getElementById('pdfModal').classList.add('hidden');
-            }
-        </script>
     </x-app-layout>
 </body>
 </html>
