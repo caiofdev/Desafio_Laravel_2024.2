@@ -33,6 +33,7 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/send-email', [MailController::class, 'sendEmail'])->name('admin.email');
 
     // Manage routes
+    
 
     Route::get('/admin/manage/managers', [ManagerController::class, 'index'])->name('admin.manager');
     Route::get('/admin/manage/managers/create', [ManagerController::class, 'create'])->name('manager.create');
