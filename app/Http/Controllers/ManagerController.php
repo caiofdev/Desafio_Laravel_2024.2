@@ -67,7 +67,7 @@ class ManagerController extends Controller
             'account_id' => $account->id,
         ]);
 
-        return redirect()->route('admin.manager');
+        // return redirect()->route('admin.manager');
     }
 
     public function view(int $id){
