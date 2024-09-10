@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pendencies', function (Blueprint $table) {
             $table->id();
-            $table->enum('title', ['deposit', 'withdraw', 'transfer']);
+            $table->enum('title', ['deposit', 'withdraw', 'transfer', 'loan']);
             $table->double('value');
             $table->timestamps();
 
