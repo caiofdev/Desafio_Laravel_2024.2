@@ -46,4 +46,19 @@
             </div>
         </div>
     </div>
+
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-slate-900 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-white flex justify-between items-center pl-20">
+                    {{ __("Send Email") }}
+                    <div class="pr-20">
+                        <a href="#">
+                            <button class="rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">Send Email</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>

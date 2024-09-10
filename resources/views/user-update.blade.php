@@ -14,7 +14,7 @@
                 @method('PATCH')
                 
                 <div class="flex items-center mb-6">
-                    <!-- Display Admin Photo -->
+                    <!-- Display User Photo -->
                     <div class="w-32 h-32 flex-shrink-0">
                         <img src="{{ '/' . $user->photo }}" alt="User Photo" class="w-full h-full object-cover rounded-full border border-gray-300">
                     </div>
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <!-- Admin Information -->
+                    <!-- User Information -->
                     <div class="mb-4">
                         <label class="block mb-1 text-sm font-medium text-white">Name</label>
                         <input type="text" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" value="{{ old('name', $user->name) }}" required />

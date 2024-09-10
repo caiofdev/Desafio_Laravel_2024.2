@@ -17,11 +17,11 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         
-                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('loan')" :active="request()->routeIs('loan')">
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('user.view-loan')" :active="request()->routeIs('user.view-loan')">
                             {{ __('Loan') }}    
                         </x-nav-link>
                         
-                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('transaction')" :active="request()->routeIs('transaction')">
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('user.transaction')" :active="request()->routeIs('transaction')">
                             {{ __('Transactions') }}
                         </x-nav-link>
 
@@ -30,12 +30,16 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manager.loan')" :active="request()->routeIs('manager.loan')">
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manager.view-loan')" :active="request()->routeIs('manager.view-loan')">
                             {{ __('Loan') }}
                         </x-nav-link>
 
                         <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manager.transaction')" :active="request()->routeIs('manager.transaction')">
                             {{ __('Transactions') }}
+                        </x-nav-link>
+
+                        <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('manage.pendencies')" :active="request()->routeIs('manage.pendencies')">
+                            {{ __('Pendencies') }}
                         </x-nav-link>
 
                         @elseif(Auth::guard('admin')->check())

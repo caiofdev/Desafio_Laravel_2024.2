@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-white font-semibold text-xl text-gray-800 leading-tight fade-up">
-            {{ __('Welcome, [User Name]') }}
+            {{ __('Welcome, user.') }}
         </h2>
     </x-slot>
 
@@ -18,9 +18,9 @@
                     <!-- User Info Card -->
                     <div class="bg-gray-800 p-4 rounded-lg shadow-lg mb-6">
                         <h4 class="text-xl font-semibold mb-2">Account Summary</h4>
-                        <p><span class="font-semibold">Account Holder:</span> [User Name]</p>
-                        <p><span class="font-semibold">Account Balance:</span> $[Balance]</p>
-                        <p><span class="font-semibold">Account Number:</span> [Account Number]</p>
+                        <p><span class="font-semibold">Account Holder:</span> {{$user->name}}</p>
+                        <p><span class="font-semibold">Account Balance: $</span> {{$user->account()->first()->account_balance}}</p>
+                        <p><span class="font-semibold">Account Number:</span> {{$user->account()->first()->account_number}}</p>
                     </div>
                     
                     <!-- Balance and Transactions Section -->
@@ -28,7 +28,7 @@
                         <!-- Balance Widget -->
                         <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
                             <h4 class="text-xl font-semibold mb-2">Current Balance</h4>
-                            <p class="text-3xl font-bold">$[Balance]</p>
+                            <p class="text-3xl font-bold">$ {{$user->account()->first()->account_balance}}</p>
                         </div>
 
                         <!-- Recent Transactions Widget -->
