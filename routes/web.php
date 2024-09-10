@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PendencyController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LoanController;
@@ -25,6 +26,11 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // Mails routes
+
+    Route::get('/admin/send-email', [MailController::class, 'index'])->name('admin.view-email');
+    Route::post('/admin/send-email', [MailController::class, 'sendEmail'])->name('admin.email');
 
     // Manage routes
 
@@ -59,7 +65,12 @@ Route::middleware('manager')->group(function () {
     Route::post('/manager/transaction/transfer', [AccountController::class, 'transfer'])->name('manager.transfer');
     Route::get('/manager/pendencies', [PendencyController::class, 'index'])->name('manage.pendencies');
     Route::get('/manager/loan', [LoanController::class, 'loanViewManager'])->name('manager.view-loan');
+    Route::post('/manager/loan', [LoanController::class, 'store'])->name('manager.loan-store');
+    Route::post('/manager/loan/pay', [LoanController::class, 'pay'])->name('manager.loan-pay');
     Route::get('/manager/transaction/extract', [AccountController::class, 'generatePdfManager'])->name('manager.pdf');
+
+    Route::delete('/manager/pendencies/loan/{id}', [PendencyController::class, 'deny'])->name('manager.deny');
+    Route::post('/manager/pendencies/loan/{id}', [PendencyController::class, 'accept'])->name('manager.accept');
 
     // Manage routes
 
@@ -87,10 +98,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/transaction/transfer', [AccountController::class, 'transferViewUser'])->name('user.view-transfer');
     Route::post('/transaction/transfer', [AccountController::class, 'transfer'])->name('user.transfer');
     Route::get('/transaction/extract', [AccountController::class, 'generatePdfUser'])->name('user.pdf');
-
-    Route::get('/loan', function () {
-        return view('loan');
-    })->name('loan');
+    Route::get('/loan', [LoanController::class, 'loanViewUser'])->name('user.view-loan');
+    Route::post('/loan', [LoanController::class, 'store'])->name('user.loan-store');
+    Route::post('/loan/pay', [LoanController::class, 'pay'])->name('user.loan-pay');
+    
 
     // Manage routes
 
