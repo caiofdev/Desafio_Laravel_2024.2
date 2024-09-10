@@ -21,6 +21,13 @@ class ManagerController extends Controller
         return view('manager.manager', compact('managers'));
     }
 
+    public function dashboard(){
+
+        $user = Auth::guard('manager')->user();
+
+        return view('manager.dashboard', compact('user'));
+    }
+
     public function create(){
 
         return view('manager.manager-create');

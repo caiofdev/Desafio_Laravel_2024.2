@@ -20,6 +20,13 @@ class UserController extends Controller
         return view('user', compact('users'));
     }
 
+    public function dashboard(){
+
+        $user = Auth::guard('web')->user();
+
+        return view('dashboard', compact('user'));
+    }
+
     public function create(){
 
         return view('user-create');
