@@ -70,7 +70,6 @@
                                 }
 
                                 function closeModal(event) {
-                                    // Verifica se o clique foi fora do conteúdo do modal
                                     if (event && event.target === document.getElementById('deleteModal')) {
                                         document.getElementById('deleteModal').classList.add('hidden');
                                     } else {

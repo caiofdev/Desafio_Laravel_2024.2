@@ -11,29 +11,18 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
-// Global
-
 Route::get('/', function () {
     return view('auth.login');
 });
 
-// Admin routes
-
 Route::middleware('admin')->group(function () {
-
-    // Dashboard
 
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    // Mails routes
-
     Route::get('/admin/send-email', [MailController::class, 'index'])->name('admin.view-email');
     Route::post('/admin/send-email', [MailController::class, 'sendEmail'])->name('admin.email');
-
-    // Manage routes
-    
 
     Route::get('/admin/manage/managers', [ManagerController::class, 'index'])->name('admin.manager');
     Route::get('/admin/manage/managers/create', [ManagerController::class, 'create'])->name('manager.create');
@@ -52,13 +41,9 @@ Route::middleware('admin')->group(function () {
     Route::delete('/admin/manage/admins/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 
-// Manager routes
-
 Route::middleware('manager')->group(function () {
 
     Route::get('/manager/dashboard', [ManagerController::class, 'dashboard'])->name('manager.dashboard');
-
-    // Operations
 
     Route::get('/manager/transaction', [AccountController::class, 'transactionsViewManager'])->name('manager.transaction');
     Route::post('/manager/transaction', [AccountController::class, 'depositAndWithdraw'])->name('manager.deposit');
@@ -73,8 +58,6 @@ Route::middleware('manager')->group(function () {
     Route::delete('/manager/pendencies/loan/{id}', [PendencyController::class, 'deny'])->name('manager.deny');
     Route::post('/manager/pendencies/loan/{id}', [PendencyController::class, 'accept'])->name('manager.accept');
 
-    // Manage routes
-
     Route::get('/manager/manage/users', [UserController::class, 'index'])->name('manager.user');
     Route::get('/manager/manage/users/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/manager/manage/users/create', [UserController::class, 'store'])->name('user.store');
@@ -84,15 +67,9 @@ Route::middleware('manager')->group(function () {
     Route::delete('/manager/manage/users/delete/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
-// User routes
-
 Route::middleware('auth')->group(function () {
 
-    // Dashboard
-
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
-
-    // Operations
 
     Route::get('/transaction', [AccountController::class, 'transactionsViewUser'])->name('user.transaction');
     Route::post('/transaction', [AccountController::class, 'depositAndWithdraw'])->name('user.deposit');
@@ -103,9 +80,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/loan', [LoanController::class, 'store'])->name('user.loan-store');
     Route::post('/loan/pay', [LoanController::class, 'pay'])->name('user.loan-pay');
     
-
-    // Manage routes
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

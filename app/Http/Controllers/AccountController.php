@@ -12,8 +12,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class AccountController extends Controller
 {
 
-    // Manager views
-
     public function transactionsViewManager(){
 
         $user = Auth::guard('manager')->user();
@@ -30,7 +28,6 @@ class AccountController extends Controller
         return view('transfer', compact('user'));
     }
 
-    // User views
 
     public function transactionsViewUser(){
 
@@ -47,9 +44,6 @@ class AccountController extends Controller
 
         return view('transfer', compact('user'));
     }
-
-
-    // Operations
 
     public function depositAndWithdraw(Request $request){
         if($request->amount <= 0 || ($request->title == 'withdraw' && $request->amount > $request->balance)){
@@ -68,9 +62,9 @@ class AccountController extends Controller
         }
 
         $account = Account::find($request->account_id);
-        // echo $account->account_balance . " + " . $request->deposit_amount;
+        
         $account->account_balance += $request->amount;
-        // echo " = " . $account->account_balance;
+        
         $account->save();
 
         return redirect()->back();
