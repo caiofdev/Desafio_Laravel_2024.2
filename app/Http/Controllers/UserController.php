@@ -106,11 +106,13 @@ class UserController extends Controller
             $path = $user->photo;
 
         $user = User::where('id', $id)->first();
+        
         if(!$user) {
             return redirect()->back()->withErrors('User not found.');
         }
 
         $address = Address::find($user->address_id);
+
         if(!$address) {
             return redirect()->back()->withErrors('Address not found.');
         }
@@ -140,9 +142,8 @@ class UserController extends Controller
     public function destroy (int $id){
         
         $user = User::where('id', $id)->first();
-    
-        $address = $user->address()->first();
 
+        $address = $user->address()->first();
         $account = $user->account()->first();
     
         $user->delete();

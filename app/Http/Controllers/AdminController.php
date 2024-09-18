@@ -89,11 +89,13 @@ class AdminController extends Controller
             $path = $admin->photo;
 
         $admin = Admin::where('id', $id)->first();
+
         if(!$admin) {
             return redirect()->back()->withErrors('Admin not found.');
         }
 
         $address = Address::find($admin->address_id);
+        
         if(!$address) {
             return redirect()->back()->withErrors('Address not found.');
         }

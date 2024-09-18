@@ -12,7 +12,9 @@ class MailController extends Controller
 
         return view('admin.send');
     }
+
     public function sendEmail(Request $request){
+        
         try {
             $toEmailAddress = $request->email;
             $subject = $request->subject;

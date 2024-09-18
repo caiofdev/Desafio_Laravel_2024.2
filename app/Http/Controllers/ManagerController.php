@@ -67,7 +67,7 @@ class ManagerController extends Controller
             'account_id' => $account->id,
         ]);
 
-        // return redirect()->route('admin.manager');
+        return redirect()->route('admin.manager');
     }
 
     public function view(int $id){
@@ -107,11 +107,13 @@ class ManagerController extends Controller
             $path = $manager->photo;
 
         $manager = Manager::where('id', $id)->first();
+
         if(!$manager) {
             return redirect()->back()->withErrors('Manager not found.');
         }
 
         $address = Address::find($manager->address_id);
+
         if(!$address) {
             return redirect()->back()->withErrors('Address not found.');
         }
@@ -143,7 +145,6 @@ class ManagerController extends Controller
         $manager = Manager::where('id', $id)->first();
     
         $address = $manager->address()->first();
-
         $account = $manager->account()->first();
     
         $manager->users()->get()->each(function ($storeUsers){

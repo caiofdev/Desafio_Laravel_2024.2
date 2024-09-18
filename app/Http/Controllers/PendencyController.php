@@ -18,7 +18,6 @@ class PendencyController extends Controller
         $manager = Auth::guard('manager')->user();
 
         $users = $manager->users()->pluck('account_id');
-
         $pendencies = Pendency::whereIn('sender_id', $users)->paginate(5);
 
         return view('manager.pendencies', compact('pendencies'));

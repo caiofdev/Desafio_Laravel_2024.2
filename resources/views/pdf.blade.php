@@ -14,6 +14,7 @@
     <h2 style="text-align: center">Extract</h2>
 
     <table style="border-collapse: collapse; width: 100%;">
+        
         <thead>
             <tr style="background-color: #adb5bd;">
                 <th style="border: 1px solid #ccc;">ID</th>
@@ -26,6 +27,7 @@
         </thead>
 
         <tbody>
+
             @forelse ($transactions as $transaction)
                 <tr>
                     <td style="border: 1px solid #ccc; border-top: none;">{{ $transaction->id }}</td>
@@ -40,9 +42,8 @@
                     <td colspan="4">No records found.</td>
                 </tr>
             @endforelse
-        </tbody>
 
+        </tbody>
     </table>
 </body>
-
 </html>

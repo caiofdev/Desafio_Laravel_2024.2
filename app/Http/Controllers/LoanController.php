@@ -61,6 +61,7 @@ class LoanController extends Controller
     public function pay(Request $request){
         
         $senderAccount = Account::find($request->sender_id);
+
         $loan = Loan::where('account_id', $request->sender_id)->get()->last();
 
         if($senderAccount->account_balance < $request->pay){
@@ -82,6 +83,7 @@ class LoanController extends Controller
             $loan->isApproved = true;
             $message = 'O empréstimo foi pago com sucesso.';
         }
+        
         $loan->save();
 
         return redirect()->back()->with('Success', $message);

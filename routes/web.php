@@ -49,15 +49,16 @@ Route::middleware('manager')->group(function () {
     Route::post('/manager/transaction', [AccountController::class, 'depositAndWithdraw'])->name('manager.deposit');
     Route::get('/manager/transaction/transfer', [AccountController::class, 'transferViewManager'])->name('manager.view-transfer');
     Route::post('/manager/transaction/transfer', [AccountController::class, 'transfer'])->name('manager.transfer');
+    Route::get('/manager/transaction/extract', [AccountController::class, 'generatePdfManager'])->name('manager.pdf');
+    
     Route::get('/manager/pendencies', [PendencyController::class, 'index'])->name('manage.pendencies');
+    Route::delete('/manager/pendencies/loan/{id}', [PendencyController::class, 'deny'])->name('manager.deny');
+    Route::post('/manager/pendencies/loan/{id}', [PendencyController::class, 'accept'])->name('manager.accept');
+    
     Route::get('/manager/loan', [LoanController::class, 'loanViewManager'])->name('manager.view-loan');
     Route::post('/manager/loan', [LoanController::class, 'store'])->name('manager.loan-store');
     Route::post('/manager/loan/pay', [LoanController::class, 'pay'])->name('manager.loan-pay');
-    Route::get('/manager/transaction/extract', [AccountController::class, 'generatePdfManager'])->name('manager.pdf');
-
-    Route::delete('/manager/pendencies/loan/{id}', [PendencyController::class, 'deny'])->name('manager.deny');
-    Route::post('/manager/pendencies/loan/{id}', [PendencyController::class, 'accept'])->name('manager.accept');
-
+    
     Route::get('/manager/manage/users', [UserController::class, 'index'])->name('manager.user');
     Route::get('/manager/manage/users/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/manager/manage/users/create', [UserController::class, 'store'])->name('user.store');
@@ -76,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/transaction/transfer', [AccountController::class, 'transferViewUser'])->name('user.view-transfer');
     Route::post('/transaction/transfer', [AccountController::class, 'transfer'])->name('user.transfer');
     Route::get('/transaction/extract', [AccountController::class, 'generatePdfUser'])->name('user.pdf');
+    
     Route::get('/loan', [LoanController::class, 'loanViewUser'])->name('user.view-loan');
     Route::post('/loan', [LoanController::class, 'store'])->name('user.loan-store');
     Route::post('/loan/pay', [LoanController::class, 'pay'])->name('user.loan-pay');

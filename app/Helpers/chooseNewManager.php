@@ -3,6 +3,7 @@
 use App\Models\Manager;
 
 if(!function_exists('chooseNewManager')){
+    
     function chooseNewManager(int $id){
         $faker = \Faker\Factory::create();
 
