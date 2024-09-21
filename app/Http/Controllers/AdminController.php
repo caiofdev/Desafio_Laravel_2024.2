@@ -125,7 +125,6 @@ class AdminController extends Controller
     public function destroy(int $id){
         
         $admin = Admin::where('id', $id)->first();
-
         $address = $admin->address()->first();
 
         $admin->admins()->get()->each(function ($storeAdmin){

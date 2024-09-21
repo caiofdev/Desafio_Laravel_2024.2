@@ -61,7 +61,6 @@ class LoanController extends Controller
     public function pay(Request $request){
         
         $senderAccount = Account::find($request->sender_id);
-
         $loan = Loan::where('account_id', $request->sender_id)->get()->last();
 
         if($senderAccount->account_balance < $request->pay){

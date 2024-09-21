@@ -49,7 +49,6 @@ class AccountController extends Controller
     public function transactionsViewUser(){
 
         $user = Auth::guard('web')->user();
-
         $latestTransaction = Transaction::where('sender_id', $user->id)->latest()->take(3)->get();
 
         return view('transaction', compact('user', 'latestTransaction'));
@@ -77,6 +76,7 @@ class AccountController extends Controller
      */
 
     public function depositAndWithdraw(Request $request){
+        
         if($request->amount <= 0 || ($request->title == 'withdraw' && $request->amount > $request->balance)){
             return redirect()->back()->with('Error', 'Valor inválido');
         }

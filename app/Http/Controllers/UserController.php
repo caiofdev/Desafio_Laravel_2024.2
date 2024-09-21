@@ -142,7 +142,6 @@ class UserController extends Controller
     public function destroy (int $id){
         
         $user = User::where('id', $id)->first();
-
         $address = $user->address()->first();
         $account = $user->account()->first();
     

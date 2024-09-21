@@ -143,7 +143,6 @@ class ManagerController extends Controller
     public function destroy(int $id){
 
         $manager = Manager::where('id', $id)->first();
-    
         $address = $manager->address()->first();
         $account = $manager->account()->first();
     

@@ -16,7 +16,6 @@ class PendencyController extends Controller
     public function index(){
 
         $manager = Auth::guard('manager')->user();
-
         $users = $manager->users()->pluck('account_id');
         $pendencies = Pendency::whereIn('sender_id', $users)->paginate(5);
 
@@ -26,7 +25,6 @@ class PendencyController extends Controller
     public function accept(int $id){
 
         $pendency = Pendency::where('id', $id)->first();
-
         $senderAccount = Account::where('id', $pendency->sender_id)->first();
         $receiverAccount = Account::where('id', $pendency->receiver_id)->first();
 
