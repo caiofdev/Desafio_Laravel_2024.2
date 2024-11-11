@@ -55,17 +55,35 @@
                         <!-- Admin -->
 
                         @elseif(Auth::guard('admin')->check())
-                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            @if(request()->routeIs('admin.dashboard'))
+                                <x-nav-link class="text-white border-none hover:text-gray-700 disabled" aria-disabled="true">
+                                    {{ __('Dashboard') }}
+                                </x-nav-link>
+                            @else
+                                <x-nav-link class="text-white border-none hover:text-blue-600" :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                                 {{ __('Dashboard') }}
-                            </x-nav-link>
+                                </x-nav-link>
+                            @endif
 
-                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.admin')" :active="request()->routeIs('admin.admin')">
-                                {{ __('Administrators') }}
-                            </x-nav-link>
+                            @if(request()->routeIs('admin.admin'))
+                                <x-nav-link class="text-white border-none hover:text-gray-700 disabled" aria-disabled="true">
+                                    {{ __('Administrators') }}
+                                </x-nav-link>
+                            @else
+                                <x-nav-link class="text-white border-none hover:text-blue-600" :href="route('admin.admin')" :active="request()->routeIs('admin.admin')">
+                                    {{ __('Administrators') }}
+                                </x-nav-link>
+                            @endif
 
-                            <x-nav-link class="text-white border-none hover:text-blue-500" :href="route('admin.manager')" :active="request()->routeIs('admin.manager')">
-                                {{ __('Managers') }}
-                            </x-nav-link>
+                            @if(request()->routeIs('admin.manager'))
+                                <x-nav-link class="text-white border-none hover:text-gray-700 disabled" aria-disabled="true">
+                                    {{ __('Managers') }}
+                                </x-nav-link>
+                            @else
+                                <x-nav-link class="text-white border-none hover:text-blue-600" :href="route('admin.manager')" :active="request()->routeIs('admin.manager')">
+                                    {{ __('Managers') }}
+                                </x-nav-link>
+                            @endif
                     @endif
                 </div>
             </div>
@@ -75,7 +93,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="fade-up inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-slate-900 hover:text-blue-500 focus:outline-none transition ease-in-out duration-150">
+                        <button class="fade-up inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-slate-900 hover:text-blue-600 focus:outline-none transition ease-in-out duration-150">
                             <div>
                                 @if(Auth::guard('manager')->check())
                                     {{Auth::guard('manager')->user()->name}}
