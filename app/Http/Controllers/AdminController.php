@@ -15,7 +15,7 @@ class AdminController extends Controller
         $admins = Admin::all();
         $admins = Admin::paginate(5);
 
-        return view('admin.admin', compact('admins'));
+        return view('admin.admin-list', compact('admins'));
     }
 
     public function create(){
